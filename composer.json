@@ -1,0 +1,34 @@
+{
+    "name": "codesache/contao-backend-user-style-bundle",
+    "description": "Adds a per-user toggle in the Contao 5 backend profile to enable or disable custom CSS and JS.",
+    "type": "contao-bundle",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Markus Schindler",
+            "email": "dev@codesache.de",
+            "homepage": "https://codesache.de",
+            "role": "Developer"
+        }
+    ],
+    "keywords": [
+        "contao",
+        "contao-bundle",
+        "backend",
+        "css",
+        "user"
+    ],
+    "require": {
+        "php": "^8.2",
+        "contao/core-bundle": "^5.3",
+        "contao/manager-plugin": "^2.0"
+    },
+    "autoload": {
+        "psr-4": {
+            "Codesache\\BackendUserStyleBundle\\": "src/"
+        }
+    },
+    "extra": {
+        "contao-manager-plugin": "Codesache\\BackendUserStyleBundle\\ContaoManager\\Plugin"
+    }
+}

@@ -1,0 +1,4 @@
+#ctrl_username[readonly],
+.tl_text.username-locked[readonly] {
+  cursor: not-allowed;
+}

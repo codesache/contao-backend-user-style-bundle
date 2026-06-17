@@ -1,0 +1,8 @@
+services:
+    _defaults:
+        autoconfigure: true
+        autowire: true
+
+    Codesache\BackendUserStyleBundle\:
+        resource: '../src/'
+        exclude: '../src/ContaoManager/'
