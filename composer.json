@@ -6,17 +6,15 @@
     "authors": [
         {
             "name": "Markus Schindler",
-            "email": "dev@codesache.de",
-            "homepage": "https://codesache.de",
+            "homepage": "https://www.codesache.de",
             "role": "Developer"
         }
     ],
     "keywords": [
         "contao",
-        "contao-bundle",
-        "backend",
-        "css",
-        "user"
+        "contao helper",
+        "contao backend",
+        "contao user backend"
     ],
     "require": {
         "php": "^8.2",
