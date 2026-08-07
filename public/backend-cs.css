@@ -40,7 +40,7 @@ body[data-name="local"]{background: #dfe4ea;}
 .tl_content h5 {font-size: .9em;}
 .tl_content h6 {font-size: .7em;}
 
-.tl_submit_container .tl_submit {color: #000 !important; font-size: 1.1em;line-height: 125%;height: inherit; text-shadow: none;font-weight: 600;display: inline-block;margin-bottom: 1em;}
+.tl_submit_container .tl_submit {color: #000 !important; font-size: 1.1em;line-height: 125%;height: inherit; text-shadow: none;font-weight: 600;display: inline-block;margin-bottom: 1em;text-wrap: initial;}
 
 .tl_submit_container ul li:last-child button {margin-bottom: 0}
 .tl_submit_container .tl_submit#save { background: var(--becolor1);}
@@ -112,6 +112,8 @@ text-align: left; margin: 0;border-radius: 5px !important;}
 .split-button ul li { display: block; margin: 0 0 0 0;width: 100%;}
 
 .split-button ul button {}
+
+button.split-toggle{display: none;}
 
 .maintenance_inactive button {width: inherit}
 
