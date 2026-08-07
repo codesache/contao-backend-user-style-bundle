@@ -1,2 +1,11 @@
+# Composer
 vendor/
+composer.lock
+
+# macOS / Editoren
 .DS_Store
+.idea/
+.vscode/
+
+# Lokale Notizen
+git-commit.txt
