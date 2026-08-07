@@ -6,7 +6,7 @@ body[data-name="local"]{background: #dfe4ea;}
 #header h1 {background: #f47c00;width: 220px;}
 .badge-title {margin-top:0;padding: 4px 12px;}
 #container,#header .inner {max-width: 1440px;margin: 0 auto;}
-#header .inner {background:#2f2d2e;}
+
 
 
 /* Eigene Backend Farben */
