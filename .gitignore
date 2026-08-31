@@ -7,5 +7,6 @@ composer.lock
 .idea/
 .vscode/
 
-# Lokale Notizen
+# Lokale Notizen / Tools
 git-commit.txt
+release.sh

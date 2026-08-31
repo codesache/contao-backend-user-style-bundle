@@ -1,8 +1,8 @@
 /* Contao Backend CSS - CodeSache.de - Markus Schindler  */
 /* Farbwerte für den StyleManager stehen in der globalen farben.css */
 body[data-name="local"] #header {background: none;}
-body[data-name="local"] #left {background:#2e2d2e; }
-body[data-name="local"]{background: #dfe4ea;}
+body[data-name="local"] #left { }
+body[data-name="local"]{background: #edeef0;}
 #header h1 {background: #f47c00;width: 220px;}
 .badge-title {margin-top:0;padding: 4px 12px;}
 #container,#header .inner {max-width: 1440px;margin: 0 auto;}
