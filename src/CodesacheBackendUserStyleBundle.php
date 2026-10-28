@@ -3,6 +3,7 @@
 namespace Codesache\BackendUserStyleBundle;
 
 use Codesache\BackendUserStyleBundle\EventListener\BackendStyleListener;
+use Codesache\BackendUserStyleBundle\EventListener\DataContainer\ContentTypeClassListener;
 use Symfony\Component\Config\Definition\Configurator\DefinitionConfigurator;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\DependencyInjection\Loader\Configurator\ContainerConfigurator;
@@ -32,6 +33,14 @@ class CodesacheBackendUserStyleBundle extends AbstractBundle
                     ])
                     ->scalarPrototype()->end()
                 ->end()
+                ->variableNode('content_types')
+                    ->info("Typ-Klasse be-type-<typ> am .cte_type: 'wrappers' | 'all' | Liste von Elementtypen")
+                    ->defaultValue('wrappers')
+                ->end()
+                ->booleanNode('strip_wrapper_group')
+                    ->info('Kategorie-Präfix bei Wrappern entfernen: „Grid (Reihe Start)“ → „Reihe Start“')
+                    ->defaultTrue()
+                ->end()
             ->end();
     }
 
@@ -42,5 +51,9 @@ class CodesacheBackendUserStyleBundle extends AbstractBundle
         $builder->getDefinition(BackendStyleListener::class)
             ->setArgument('$cssFiles', $config['css'])
             ->setArgument('$jsFiles', $config['js']);
+
+        $builder->getDefinition(ContentTypeClassListener::class)
+            ->setArgument('$contentTypes', $config['content_types'])
+            ->setArgument('$stripWrapperGroup', $config['strip_wrapper_group']);
     }
 }
