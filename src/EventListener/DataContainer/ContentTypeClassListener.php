@@ -10,7 +10,10 @@ use Contao\System;
  * Backend-Inhaltsliste: setzt am .cte_type eine Typ-Klasse „be-type-<typ>“
  * (rowStart → be-type-row-start, rsce_sectionwrapper_start → be-type-rsce-sectionwrapper-start).
  * backend-cs.js kopiert alle „be-“-Klassen als „<klasse>-wrapper“ an die Zeile (.tl_content).
- * Optional wird bei Wrappern das Kategorie-Präfix entfernt: „Grid (Reihe Start)“ → „Reihe Start“.
+ * Optional wird bei Wrappern das Kategorie-Präfix entfernt: „Grid (Reihe Start)“ → „Reihe Start“
+ * (nur bis Contao 5.6 – ab 5.7 setzt der Core dieses Präfix nicht mehr).
+ *
+ * Bis 5.6 wird der child_record_callback umhüllt, ab 5.7 der label_callback (Klasse über „state“).
  */
 #[AsCallback(table: 'tl_content', target: 'config.onload')]
 class ContentTypeClassListener
@@ -42,16 +45,48 @@ class ContentTypeClassListener
         }
         $this->registered = true;
 
-        $sorting = &$GLOBALS['TL_DCA']['tl_content']['list']['sorting'];
-        $original = $sorting['child_record_callback'] ?? ['tl_content', 'addCteType'];
+        $list = &$GLOBALS['TL_DCA']['tl_content']['list'];
 
-        $sorting['child_record_callback'] = function (array $row) use ($original): string {
-            $html = \is_array($original)
-                ? System::importStatic($original[0])->{$original[1]}($row)
-                : $original($row);
+        // Contao bis 5.6: Liste wird über child_record_callback (tl_content::addCteType) als HTML gerendert
+        if (isset($list['sorting']['child_record_callback'])) {
+            $original = $list['sorting']['child_record_callback'];
 
-            return $this->decorate($row['type'], $html);
+            $list['sorting']['child_record_callback'] = function (array $row) use ($original): string {
+                $html = $this->call($original, [$row]);
+
+                return \is_string($html) ? $this->decorate($row['type'], $html) : (string) $html;
+            };
+
+            return;
+        }
+
+        // Contao ab 5.7: Liste wird über label_callback gerendert, Rückgabe [label, preview, state].
+        // „state“ landet per addClass() direkt am .cte_type-Div → dort die Typ-Klasse anhängen.
+        // Ein child_record_callback darf hier NICHT gesetzt werden (erzwingt den Legacy-Pfad).
+        $original = $list['label']['label_callback'] ?? null;
+
+        if (null === $original) {
+            return;
+        }
+
+        $list['label']['label_callback'] = function (array $row, string $label, ...$args) use ($original): array|string {
+            $result = $this->call($original, [$row, $label, ...$args]);
+
+            if (!\is_array($result) || !$this->matches($row['type'], $this->isWrapper($row['type']))) {
+                return $result;
+            }
+
+            $result[2] = trim(($result[2] ?? '').' be-type-'.$this->toClass($row['type']));
+
+            return $result;
         };
+    }
+
+    private function call(array|callable $callback, array $args): mixed
+    {
+        return \is_array($callback)
+            ? System::importStatic($callback[0])->{$callback[1]}(...$args)
+            : $callback(...$args);
     }
 
     private function decorate(string $type, string $html): string
