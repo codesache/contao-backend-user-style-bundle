@@ -339,7 +339,7 @@ background: #f47c00;content: ' '; width: 6px; height: 22px; display: inline-bloc
 
 
 #pal_status_legend:not(.collapsed)>.widget-group {
-    position: inherit;
+    position: inherit !important;
 }
 
 
